@@ -8,4 +8,4 @@ This code renames folder files by replacing patterns with chosen text.
 
 ## Setup
 1. Download this repositories source code
-2. Run script.cmd to execute the process and undo.cmd to undo the changes and enter the required information
+2. Run `script.cmd` to execute the process and `undo.cmd` to undo the changes and enter the required information
