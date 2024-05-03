@@ -31,9 +31,9 @@ try {
 
     /**
      * @description
-     * Looped durch den angegebenen Pfad
+     * Looped durch den angegebenen Pfad und führt eine Funktion aus
      * 
-     * Loops trough the entered path
+     * Loops trough the entered path and executes a function
 
      * @author ItsLeMax
 
