@@ -1,5 +1,5 @@
 # File Mass Renaming
-This code renames folder files by replacing patterns with chosen text.
+Renames all files of a folder by replacing repeating patterns with desired text
 
 ## Requirements
 - Node (executable [here](https://nodejs.org/en/download/))
