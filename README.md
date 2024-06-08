@@ -1,5 +1,5 @@
 # File Mass Renaming
-Renames all files of a folder by replacing repeating patterns with desired text
+Renames all files of a folder by replacing repeating patterns with desired text\
 ![console](https://github.com/ItsLeMax/File-Mass-Renaming/assets/80857459/d854fd67-9596-4fdd-84fa-c8fb3f0a89a3)
 
 ## Requirements
