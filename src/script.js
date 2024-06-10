@@ -79,7 +79,7 @@ try {
         output: process.stdout
     });
 
-    readLine.question('Are you sure? | Bist du dir sicher? < 1 (yes) >: ', (answer) => {
+    readLine.question('Are you sure? | Bist du dir sicher? < 1 (yes) | 0 (no) >: ', (answer) => {
         if (answer.trim() == "1") {
             const data = new Array;
 
