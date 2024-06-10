@@ -96,6 +96,10 @@ try {
                 );
             });
 
+            if (!fs.existsSync("../data")) {
+                fs.mkdirSync("../data");
+            }
+
             if (!fs.existsSync(filePath)) {
                 fs.writeFileSync(filePath, JSON.stringify(new Object));
             }
