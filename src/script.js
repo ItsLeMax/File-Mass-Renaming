@@ -7,6 +7,7 @@ const colors = {
     reset: "\x1b[0m"
 };
 const filePath = "../data/recent.json";
+const archive = "../data/archive";
 
 try {
     const path = process.argv[2];
@@ -78,7 +79,7 @@ try {
         output: process.stdout
     });
 
-    readLine.question('Are you sure? | Bist du dir sicher? < 1 (yes) | 0 (no) >: ', (answer) => {
+    readLine.question('Are you sure? | Bist du dir sicher? < 1 (yes) >: ', (answer) => {
         if (answer.trim() == "1") {
             const data = new Array;
 
@@ -95,9 +96,18 @@ try {
                 );
             });
 
-            if (Object.keys(require(filePath)).length) {
-                fs.renameSync(filePath, `../data/${new Date().getTime()}.json`);
+            if (!fs.existsSync(filePath)) {
+                fs.writeFileSync(filePath, JSON.stringify(new Object));
             }
+
+            if (!fs.existsSync(archive)) {
+                fs.mkdirSync(archive);
+            }
+
+            if (Object.keys(require(filePath)).length) {
+                fs.renameSync(filePath, `${archive}/${new Date().getTime()}.json`);
+            }
+
             fs.writeFileSync(filePath, JSON.stringify({
                 path: path,
                 data: data
