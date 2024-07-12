@@ -1,23 +1,27 @@
+const config = require("../run/config.json");
 const readline = require('readline');
 const fs = require("fs");
 
 const colors = {
     success: "\x1b[32m",
+    warning: "\x1b[33m",
     error: "\x1b[31m",
     reset: "\x1b[0m"
 };
-const filePath = "../data/recent.json";
+const recentsPath = "../data/recent.json";
 const archive = "../data/archive";
 
 try {
-    const path = process.argv[2];
+    const startPath = process.argv[2];
     const toReplace = process.argv[3];
     const replaceWith = process.argv[4];
 
-    if (!fs.existsSync(path)) {
+    if (!fs.existsSync(startPath)) {
         console.error(
             colors.error +
-            "The entered path does not exist.", "Der angegebene Pfad existiert nicht." + colors.reset
+            "The entered path does not exist." + "\n" +
+            "Der angegebene Pfad existiert nicht." +
+            colors.reset
         );
         return;
     }
@@ -25,54 +29,59 @@ try {
     if (!toReplace) {
         console.error(
             colors.error +
-            "You did not enter a RegEx", "Du hast keine RegEx angegeben." + colors.reset
+            "You did not enter a RegEx" + "\n" +
+            "Du hast keine RegEx angegeben." +
+            colors.reset
         );
         return;
     }
 
     /**
      * @description
-     * Looped durch den angegebenen Pfad und führt eine Funktion aus
+     * Looped (rekursiv) durch den angegebenen Pfad und führt eine Funktion aus
      * 
-     * Loops trough the entered path and executes a function
-
+     * Loops (recursively) trough the entered path and executes a function
+     *
      * @author ItsLeMax
-
+     * 
+     * @param { String } path
+     * Pfad mit Dateien und potenziell Ordnern
+     * 
+     * Path with files and potentially folders
+     *
      * @param { Function } fn
      * Funktion, welche ausgeführt werden soll
      * 
      * Function, which is supposed to be executed
      */
-    const loop = (fn) => {
-        for (const file of fs.readdirSync(path)) {
-            fn(file, (() => file.replace(new RegExp(toReplace), replaceWith))());
+    const loopThroughFiles = (path, fn) => {
+        for (const originalName of fs.readdirSync(path)) {
+            const target = `${path}\\${originalName}`;
+            if (config.subDirectories && fs.statSync(target).isDirectory()) {
+                loopThroughFiles(target, fn);
+            }
+
+            const newName = originalName.replace(new RegExp(toReplace), replaceWith);
+            if (originalName == newName) continue;
+
+            fn(originalName, newName, target);
         }
     }
 
     console.log(
-        colors.success +
-        "The following files will be renamed", "Folgende Dateien werden umbenannt:" + colors.reset
+        colors.warning +
+        "The following files will be renamed:" + "\n" +
+        "Folgende Dateien werden umbenannt:" +
+        colors.reset
     );
 
-    const newNames = new Array;
-    loop((originalName, newName) => {
-        newNames.push(newName);
+    loopThroughFiles(startPath, (originalName, newName) => {
         console.log(
-            colors.success +
+            colors.warning +
             `${originalName} -> ${newName}` +
             colors.reset
         );
     });
-
-    if ((new Set(newNames)).size != newNames.length) {
-        console.error(
-            colors.error +
-            "Some files would get the same name and file type and potentially overwrite each other! The process aborted.",
-            "Einige Dateien würden den gleichen Namen erhalten mit gleichem Dateityp und sich somit potenziell selbst überschreiben! Der Prozess wurde abgebrochen." +
-            colors.reset
-        );
-        return;
-    }
 
     const readLine = readline.createInterface({
         input: process.stdin,
@@ -81,49 +90,68 @@ try {
 
     readLine.question('Are you sure? | Bist du dir sicher? < 1 (yes) | 0 (no) >: ', (answer) => {
         if (answer.trim() == "1") {
-            const data = new Array;
-
-            loop((originalName, newName) => {
-                data.push({
-                    originalName: originalName,
-                    newName: newName
-                });
-                fs.renameSync(`${path}/${originalName}`, `${path}/${newName}`);
-
-                console.log(
-                    colors.success +
-                    "Renaming successful!", "Umbenennung erfolgreich!", `${originalName} -> ${newName}` + colors.reset
-                );
-            });
+            const data = new Object;
 
             if (!fs.existsSync("../data")) {
                 fs.mkdirSync("../data");
             }
 
-            if (!fs.existsSync(filePath)) {
-                fs.writeFileSync(filePath, JSON.stringify(new Object));
+            if (!fs.existsSync(recentsPath)) {
+                fs.writeFileSync(recentsPath, JSON.stringify(new Object));
             }
 
-            if (!fs.existsSync(archive)) {
-                fs.mkdirSync(archive);
+            if (Object.keys(require(recentsPath)).length) {
+                if (!fs.existsSync(archive)) {
+                    fs.mkdirSync(archive);
+                }
+
+                fs.renameSync(recentsPath, `${archive}/${new Date().getTime()}.json`);
             }
 
-            if (Object.keys(require(filePath)).length) {
-                fs.renameSync(filePath, `${archive}/${new Date().getTime()}.json`);
-            }
+            loopThroughFiles(startPath, (originalName, newName, target) => {
+                const targetsFolder = target.substr(0, target.lastIndexOf("\\"));
 
-            fs.writeFileSync(filePath, JSON.stringify({
-                path: path,
-                data: data
-            }, null, "\t"), () => { });
+                if (!data[targetsFolder]) {
+                    data[targetsFolder] = new Array;
+                }
+
+                data[targetsFolder].push({
+                    originalName: originalName,
+                    newName: newName,
+                });
+
+                fs.renameSync(target, `${targetsFolder}/${newName}`);
+                fs.writeFileSync(recentsPath, JSON.stringify(data, null, "\t"), () => { });
+
+                console.log(
+                    colors.success +
+                    `${originalName} -> ${newName}` +
+                    colors.reset
+                );
+            });
+
+            console.log(
+                colors.success +
+                "Renamed all files successfully." + "\n" +
+                "Dateien wurden allesamt erfolgreich umbenannt." +
+                colors.reset
+            );
         } else {
             console.log(
                 colors.error +
-                "Input aborted.", "Die Eingabe wurde abgebrochen." + colors.reset
+                "Input aborted." + "\n" +
+                "Die Eingabe wurde abgebrochen." +
+                colors.reset
             );
         }
+
         readLine.close();
     });
 } catch (error) {
-    console.log(colors.error + "An error occured.", "Ein Fehler ist aufgetreten." + colors.reset + "\n" + error);
+    console.log(
+        colors.error +
+        "An error occured." + "\n" +
+        "Ein Fehler ist aufgetreten." +
+        colors.reset + "\n" + error
+    );
 }
