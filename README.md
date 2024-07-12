@@ -2,6 +2,10 @@
 Renames all files of a folder by replacing repeating patterns with desired text\
 ![console](https://github.com/ItsLeMax/File-Mass-Renaming/assets/80857459/d854fd67-9596-4fdd-84fa-c8fb3f0a89a3)
 
+> [!CAUTION]
+> Make sure you do not choose a name and file extension that already exists in the same folder to prevent accidental overwrites.
+> This is usually a rare occurance and can be prevented by looking through the log that gets sent before confirming the process.
+
 ## Requirements
 - Node (executable [here](https://nodejs.org/en/download/))
 - Windows
