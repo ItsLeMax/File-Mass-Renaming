@@ -1,6 +1,7 @@
 # File Mass Renaming
 Renames all files of a folder by replacing repeating patterns with desired text\
-![console](https://github.com/ItsLeMax/File-Mass-Renaming/assets/80857459/d854fd67-9596-4fdd-84fa-c8fb3f0a89a3)
+![v1 0_2](https://github.com/user-attachments/assets/6d9ae9c8-a238-4c63-9391-1ca7dd59f1fb)
+![v1 0_3](https://github.com/user-attachments/assets/b342a7fc-a957-4d1a-bbdb-021f645d0177)
 
 > [!CAUTION]
 > Make sure you do not choose a name and file extension that already exists in the same folder to prevent accidental overwrites.
