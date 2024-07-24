@@ -8,9 +8,11 @@ Renames all files of a folder by replacing repeating patterns with desired text\
 > This is usually a rare occurance and can be prevented by looking through the log that gets sent before confirming the process.
 
 ## Requirements
+> ...that may have working alternatives:
 - Node (executable [here](https://nodejs.org/en/download/))
 - Windows
-- Alternatives may work aswell.
+> ...that has working alternatives:
+- 7-Zip (executable [here](https://7-zip.de/download.html))
 
 ## Setup
 1. Download the source code by clicking on `<> Code` & `Download ZIP` and extract its content\
