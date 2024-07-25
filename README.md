@@ -11,7 +11,7 @@ Renames all files of a folder by replacing repeating patterns with desired text\
 > ...that may have working alternatives:
 - Node (executable [here](https://nodejs.org/en/download/))
 - Windows
-> ...that has working alternatives:
+> ...that have working alternatives:
 - 7-Zip (executable [here](https://7-zip.de/download.html))
 
 ## Setup
