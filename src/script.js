@@ -61,7 +61,7 @@ try {
                 loopThroughFiles(target, fn);
             }
 
-            const newName = originalName.replace(new RegExp(toReplace), replaceWith);
+            const newName = originalName.replace(new RegExp(toReplace, 'g'), replaceWith);
             if (originalName == newName) continue;
 
             fn(originalName, newName, target);
