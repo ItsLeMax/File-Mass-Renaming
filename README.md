@@ -22,5 +22,5 @@ Renames all files of a folder by replacing repeating patterns with desired text\
 ![download](https://github.com/ItsLeMax/File-Mass-Renaming/assets/80857459/847b4ed1-b820-4479-8a0b-a48bcfe55108)
 2. (Optional) Open the `config.json` inside `/run/` and choose if you'd like to check sub folders aswell.
 ![1 1 0-config](https://github.com/user-attachments/assets/7752995a-cb73-478c-b538-04748df0baf4)
-3. Run `execute.bat` to execute the process and `undo.bat` to undo the changes and enter the required information.
+3. Run `execute.bat` to execute the process and `undo.bat` to undo the changes and enter the required information.\
 ![1 0 0-scripts](https://github.com/user-attachments/assets/dd843869-b66b-4fbe-b8b5-a9ae9183f0f9)
