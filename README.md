@@ -6,7 +6,7 @@ Renames all files of a folder by replacing repeating patterns with desired text\
 
 > [!CAUTION]
 > Make sure you do not choose a name and file extension that already exists in the same folder to prevent accidental overwrites.
-> This is usually a rare occurance and can be prevented by looking through the log that gets sent before confirming the process and the files.
+> This is usually a rare occurance and can be prevented by looking through the log that gets sent before confirming the process and the files. An update preventing this issue is planned.
 
 ## Requirements
 
