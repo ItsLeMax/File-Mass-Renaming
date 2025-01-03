@@ -1,5 +1,5 @@
 const config = require("../run/config.json");
-const readline = require('readline');
+const readline = require("readline");
 const fs = require("fs");
 
 const colors = {
@@ -61,7 +61,7 @@ try {
                 loopThroughFiles(target, fn);
             }
 
-            const newName = originalName.replace(new RegExp(toReplace, 'g'), replaceWith);
+            const newName = originalName.replace(new RegExp(toReplace, "g"), replaceWith);
             if (originalName == newName) continue;
 
             fn(originalName, newName, target);
@@ -88,7 +88,7 @@ try {
         output: process.stdout
     });
 
-    readLine.question('Are you sure? | Bist du dir sicher? < 1 (yes) | 0 (no) >: ', (answer) => {
+    readLine.question("Are you sure? | Bist du dir sicher? < 1 (yes) | 0 (no) >: ", (answer) => {
         if (answer.trim() == "1") {
             const data = new Object;
 
