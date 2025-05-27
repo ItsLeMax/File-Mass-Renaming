@@ -1,4 +1,3 @@
-const config = require("../run/config.json");
 const readline = require("readline");
 const fs = require("fs");
 
@@ -13,8 +12,9 @@ const archive = "../data/archive";
 
 try {
     const startPath = process.argv[2];
-    const toReplace = process.argv[3];
-    const replaceWith = process.argv[4];
+    const recursion = process.argv[3];
+    const toReplace = process.argv[4];
+    const replaceWith = process.argv[5];
 
     if (!fs.existsSync(startPath)) {
         console.error(
@@ -57,7 +57,7 @@ try {
     const loopThroughFiles = (path, fn) => {
         for (const originalName of fs.readdirSync(path)) {
             const target = `${path}\\${originalName}`;
-            if (config.subDirectories && fs.statSync(target).isDirectory()) {
+            if (recursion == 1 && fs.statSync(target).isDirectory()) {
                 loopThroughFiles(target, fn);
             }
 
