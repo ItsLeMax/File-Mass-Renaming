@@ -1,37 +1,52 @@
 const fs = require("fs");
-const colors = {
+
+const COLORS = {
     success: "\x1b[32m",
     reset: "\x1b[0m"
 };
 
 try {
+
     const recents = require("../data/recent.json");
 
+    // Undo from each folder...
+
     for (const filePath of Object.keys(recents)) {
+
+        // ...each file
+
         for (const fileData of recents[filePath]) {
+
             fs.renameSync(`${filePath}/${fileData.newName}`, `${filePath}/${fileData.originalName}`);
 
             console.log(
-                colors.success +
+                COLORS.success +
                 `${fileData.newName} -> ${fileData.originalName}` +
-                colors.reset
+                COLORS.reset
+
             );
+
         }
+
     }
+
+    // Clear recent.json since it has been undone anyway
 
     fs.writeFileSync(`../data/recent.json`, JSON.stringify({}), () => { });
 
     console.log(
-        colors.success +
+        COLORS.success +
         "Renaming undone successfully." + "\n" +
         "Umbenennung erfolgreich rückgängig gemacht." +
-        colors.reset
+        COLORS.reset
     );
 } catch (error) {
+
     console.error(
         "\x1b[31m" +
         "An error occured." + "\n" +
         "Ein Fehler ist aufgetreten." +
-        colors.reset + "\n" + error
+        COLORS.reset + "\n" + error
     );
+
 }
