@@ -88,7 +88,7 @@ try {
 
         // Storing every file name change here
 
-        const data = new Object;
+        const data = {};
 
         // Renaming process: Create folder
 
@@ -98,7 +98,7 @@ try {
         // Create json file to store every rename (for undo)
 
         if (!fs.existsSync(RECENTS_PATH))
-            fs.writeFileSync(RECENTS_PATH, JSON.stringify(new Object));
+            fs.writeFileSync(RECENTS_PATH, JSON.stringify({}));
 
         // Archive old json if existing
 
@@ -120,7 +120,7 @@ try {
             // Array for each file
 
             if (!data[targetsFolder])
-                data[targetsFolder] = new Array;
+                data[targetsFolder] = [];
 
             // Array contains an object with previous name and new name
 
