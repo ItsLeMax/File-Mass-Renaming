@@ -2,7 +2,8 @@ const fs = require("fs");
 
 const COLORS = {
     success: "\x1b[32m",
-    reset: "\x1b[0m"
+    reset: "\x1b[0m",
+    error: "\x1b[31m"
 };
 
 try {
@@ -44,7 +45,7 @@ try {
 } catch (error) {
 
     console.error(
-        "\x1b[31m" +
+        COLORS.error +
         "An error occured." + "\n" +
         "Ein Fehler ist aufgetreten." +
         COLORS.reset + "\n" + error
