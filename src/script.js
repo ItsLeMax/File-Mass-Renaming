@@ -85,6 +85,13 @@ try {
         loopThroughFiles(startPath, ({ originalName, newName, target }) => {
 
             const targetsFolder = target.substr(0, target.lastIndexOf("\\"));
+            const pathOfNewFile = `${targetsFolder}\\${newName}`;
+            const duplicate = fs.existsSync(pathOfNewFile);
+
+            if (duplicate) {
+                logger.error("Duplikat erkannt | Duplicate detected: " + pathOfNewFile);
+                return;
+            }
 
             // Array for each file
 
