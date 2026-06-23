@@ -1,15 +1,7 @@
 const readline = require("readline");
 const fs = require("fs");
-
-const COLORS = {
-    success: "\x1b[32m",
-    warning: "\x1b[33m",
-    error: "\x1b[31m",
-    reset: "\x1b[0m"
-};
-
-const RECENTS_PATH = "../data/recent.json";
-const ARCHIVE_PATH = "../data/archive";
+const { RECENTS_PATH, ARCHIVE_PATH } = require("./config/config.js");
+const logger = require("./util/logger.js");
 
 try {
 
@@ -21,45 +13,21 @@ try {
     // Human error handling
 
     if (!fs.existsSync(startPath)) {
-
-        console.error(
-            COLORS.error +
-            "The entered path does not exist." + "\n" +
-            "Der angegebene Pfad existiert nicht." +
-            COLORS.reset
-        );
-
+        logger.error("The entered path does not exist." + "\n" + "Der angegebene Pfad existiert nicht.");
         return;
-
     }
 
     if (!toReplace) {
-
-        console.error(
-            COLORS.error +
-            "You did not enter a RegEx" + "\n" +
-            "Du hast keine RegEx angegeben." +
-            COLORS.reset
-        );
-
+        logger.error("You did not enter a RegEx" + "\n" + "Du hast keine RegEx angegeben.");
         return;
     }
 
     // Loop through files and log every planned rename
 
-    console.log(
-        COLORS.warning +
-        "The following files will be renamed:" + "\n" +
-        "Folgende Dateien werden umbenannt:" +
-        COLORS.reset
-    );
+    logger.warn("The following files will be renamed:" + "\n" + "Folgende Dateien werden umbenannt:");
 
     loopThroughFiles(startPath, (originalName, newName) => {
-        console.log(
-            COLORS.warning +
-            `${originalName} -> ${newName}` +
-            COLORS.reset
-        );
+        logger.warn(`${originalName} -> ${newName}`);
     });
 
     // Ask if the renaming should be started
@@ -74,16 +42,8 @@ try {
         // Case of cancellation
 
         if (answer.trim() != "1") {
-
-            console.log(
-                COLORS.error +
-                "Input aborted." + "\n" +
-                "Die Eingabe wurde abgebrochen." +
-                COLORS.reset
-            );
-
+            logger.error("Input aborted." + "\n" + "Die Eingabe wurde abgebrochen.");
             return;
-
         }
 
         // Storing every file name change here
@@ -136,21 +96,11 @@ try {
 
             // Logging
 
-            console.log(
-                COLORS.success +
-                `${originalName} -> ${newName}` +
-                COLORS.reset
-            );
+            logger.success(`${originalName} -> ${newName}`);
 
         });
 
-        console.log(
-            COLORS.success +
-            "Renamed all files successfully." + "\n" +
-            "Dateien wurden allesamt erfolgreich umbenannt." +
-            COLORS.reset
-        );
-
+        logger.success("Renamed all files successfully." + "\n" + "Dateien wurden allesamt erfolgreich umbenannt.");
         readLine.close();
 
     });
@@ -188,12 +138,5 @@ try {
     }
 
 } catch (error) {
-
-    console.log(
-        COLORS.error +
-        "An error occured." + "\n" +
-        "Ein Fehler ist aufgetreten." +
-        COLORS.reset + "\n" + error
-    );
-
+    logger.error("An error occured." + "\n" + "Ein Fehler ist aufgetreten." + error);
 }
