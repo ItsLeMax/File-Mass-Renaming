@@ -89,7 +89,7 @@ try {
             const duplicate = fs.existsSync(pathOfNewFile);
 
             if (duplicate) {
-                logger.error("Überspringe Duplikat: | Skip duplicate: " + pathOfNewFile);
+                logger.error("Skip duplicate: | Überspringe Duplikat: " + pathOfNewFile);
                 return;
             }
 
