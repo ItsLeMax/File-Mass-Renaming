@@ -13,18 +13,18 @@ try {
     // Human error handling
 
     if (!fs.existsSync(startPath)) {
-        logger.error("The entered path does not exist." + "\n" + "Der angegebene Pfad existiert nicht.");
+        logger.error("The entered path does not exist. | Der angegebene Pfad existiert nicht.");
         return;
     }
 
     if (!toReplace) {
-        logger.error("You did not enter a RegEx" + "\n" + "Du hast keine RegEx angegeben.");
+        logger.error("You did not enter a RegEx. | Du hast keine RegEx angegeben.");
         return;
     }
 
     // Loop through files and log every planned rename
 
-    logger.warn("The following files will be renamed:" + "\n" + "Folgende Dateien werden umbenannt:");
+    logger.warn("The following files will be renamed: | Folgende Dateien werden umbenannt:");
 
     let fileCount = 0;
     loopThroughFiles(startPath, ({ originalName, newName }) => {
@@ -51,7 +51,7 @@ try {
         // Case of cancellation
 
         if (answer.trim() != "1") {
-            logger.error("Input aborted." + "\n" + "Die Eingabe wurde abgebrochen.");
+            logger.error("Input aborted. | Die Eingabe wurde abgebrochen.");
             return;
         }
 
@@ -89,7 +89,7 @@ try {
             const duplicate = fs.existsSync(pathOfNewFile);
 
             if (duplicate) {
-                logger.error("Duplikat erkannt | Duplicate detected: " + pathOfNewFile);
+                logger.error("Überspringe Duplikat: | Skip duplicate: " + pathOfNewFile);
                 return;
             }
 
@@ -116,7 +116,7 @@ try {
 
         });
 
-        logger.success("Renamed all files successfully." + "\n" + "Dateien wurden allesamt erfolgreich umbenannt.");
+        logger.success("Renamed all files successfully. | Dateien wurden allesamt erfolgreich umbenannt.");
         readLine.close();
 
     });
@@ -164,5 +164,5 @@ try {
     }
 
 } catch (error) {
-    logger.error("An error occured." + "\n" + "Ein Fehler ist aufgetreten." + error);
+    logger.error("An error occured. | Ein Fehler ist aufgetreten." + error);
 }
