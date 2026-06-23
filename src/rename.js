@@ -164,5 +164,5 @@ try {
     }
 
 } catch (error) {
-    logger.error("An error occured. | Ein Fehler ist aufgetreten." + error);
+    logger.error("An error occured: | Ein Fehler ist aufgetreten:" + "\n" + error);
 }
