@@ -26,8 +26,17 @@ try {
 
     logger.warn("The following files will be renamed:" + "\n" + "Folgende Dateien werden umbenannt:");
 
+    let fileCount = 0;
     loopThroughFiles(startPath, (originalName, newName) => {
+
         logger.warn(`${originalName} -> ${newName}`);
+        fileCount++;
+
+        if (fileCount == 50) {
+            logger.warn("[...]");
+            return true;
+        }
+
     });
 
     // Ask if the renaming should be started
@@ -131,7 +140,10 @@ try {
 
             // Mostly an individual arrow function that gets executed here
 
-            fn(originalName, newName, target);
+            const finished = fn(originalName, newName, target);
+
+            if (finished)
+                break;
 
         }
 
