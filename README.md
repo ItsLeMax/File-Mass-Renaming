@@ -4,10 +4,6 @@ Renames all files of a folder by replacing repeating patterns with desired text\
 ![1 0 0-rename](https://github.com/user-attachments/assets/96bd908f-0886-48ec-ac37-51387c017a0d)
 ![1 0 0-undo](https://github.com/user-attachments/assets/eb6e79d4-3470-42b4-9cc7-258f1beb5e09)
 
-> [!CAUTION]
-> Make sure you do not choose a name and file extension that already exists in the same folder to prevent accidental overwrites.
-> This is usually a rare occurance and can be prevented by looking through the log that gets sent before confirming the process and the files. An update preventing this issue is planned.
-
 ## Requirements
 
 > ...that may have working alternatives:
