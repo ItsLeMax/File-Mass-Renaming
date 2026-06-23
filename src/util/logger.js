@@ -18,8 +18,8 @@ module.exports = {
      * @param { String } message Nachricht für die Warnmeldung
      * @since 1.1.2 
      */
-    warn(msg) {
-        console.log(COLORS.warn, msg, COLORS.reset);
+    warn(message) {
+        console.log(COLORS.warning, message, COLORS.reset);
     },
 
     /**
@@ -28,8 +28,8 @@ module.exports = {
      * @param { String } message Nachricht für die Erfolgsmeldung
      * @since 1.1.2 
      */
-    success(msg) {
-        console.log(COLORS.success, msg, COLORS.reset);
+    success(message) {
+        console.log(COLORS.success, message, COLORS.reset);
     }
 
 };
