@@ -27,7 +27,7 @@ try {
     logger.warn("The following files will be renamed:" + "\n" + "Folgende Dateien werden umbenannt:");
 
     let fileCount = 0;
-    loopThroughFiles(startPath, (originalName, newName) => {
+    loopThroughFiles(startPath, ({ originalName, newName }) => {
 
         logger.warn(`${originalName} -> ${newName}`);
         fileCount++;
@@ -82,7 +82,7 @@ try {
 
         // Renaming block
 
-        loopThroughFiles(startPath, (originalName, newName, target) => {
+        loopThroughFiles(startPath, ({ originalName, newName, target }) => {
 
             const targetsFolder = target.substr(0, target.lastIndexOf("\\"));
 
@@ -115,12 +115,19 @@ try {
     });
 
     /**
+     * @typedef { Object } CallbackParameters
+     * @property { String } originalName Original name of the file
+     * @property { String } newName New name of the file
+     * @property { String } target target path
+     * @returns { true? } Boolean `true` can be returned to cancel the loop
+     */
+    /**
      * @description Loops (recursively) trough the entered path and executes a function
      * @author ItsLeMax
      * @param { String } path Path with files and potentially folders
-     * @param { Function } fn Function, which is supposed to be executed
+     * @param { (data: CallbackParameters) => true? } callback Callback function, which is supposed to be executed
      */
-    function loopThroughFiles(path, fn) {
+    function loopThroughFiles(path, callback) {
 
         // Loop through files of path
 
@@ -131,7 +138,7 @@ try {
             // If the file is a folder, loop through that aswell
 
             if (recursion == 1 && fs.statSync(target).isDirectory())
-                loopThroughFiles(target, fn);
+                loopThroughFiles(target, callback);
 
             const newName = originalName.replace(new RegExp(toReplace, "g"), replaceWith);
 
@@ -140,7 +147,7 @@ try {
 
             // Mostly an individual arrow function that gets executed here
 
-            const finished = fn(originalName, newName, target);
+            const finished = callback({ originalName, newName, target });
 
             if (finished)
                 break;
