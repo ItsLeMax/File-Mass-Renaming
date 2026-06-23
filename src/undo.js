@@ -1,32 +1,19 @@
 const fs = require("fs");
-
-const COLORS = {
-    success: "\x1b[32m",
-    reset: "\x1b[0m",
-    error: "\x1b[31m"
-};
+const logger = require("./util/logger.js");
 
 try {
 
     const recents = require("../data/recent.json");
 
-    // Undo from each folder...
+    // Undo each folder...
 
     for (const filePath of Object.keys(recents)) {
 
-        // ...each file
+        // ...from each file
 
         for (const fileData of recents[filePath]) {
-
             fs.renameSync(`${filePath}/${fileData.newName}`, `${filePath}/${fileData.originalName}`);
-
-            console.log(
-                COLORS.success +
-                `${fileData.newName} -> ${fileData.originalName}` +
-                COLORS.reset
-
-            );
-
+            logger.success(`${fileData.newName} -> ${fileData.originalName}`);
         }
 
     }
@@ -34,21 +21,8 @@ try {
     // Clear recent.json since it has been undone anyway
 
     fs.writeFileSync(`../data/recent.json`, JSON.stringify({}), () => { });
-
-    console.log(
-        COLORS.success +
-        "Renaming undone successfully." + "\n" +
-        "Umbenennung erfolgreich rückgängig gemacht." +
-        COLORS.reset
-    );
+    logger.success("Renaming undone successfully. | Umbenennung erfolgreich rückgängig gemacht.");
 
 } catch (error) {
-
-    console.error(
-        COLORS.error +
-        "An error occured." + "\n" +
-        "Ein Fehler ist aufgetreten." +
-        COLORS.reset + "\n" + error
-    );
-
+    logger.error("An error occured: | Ein Fehler ist aufgetreten:" + "\n" + error);
 }
