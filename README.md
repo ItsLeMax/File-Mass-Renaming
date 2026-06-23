@@ -16,5 +16,5 @@ Renames all files of a folder by replacing repeating patterns with desired text\
 
 1. Download the source code by clicking on `<> Code` & `Download ZIP` and extract its content.\
 ![download](https://github.com/ItsLeMax/File-Mass-Renaming/assets/80857459/847b4ed1-b820-4479-8a0b-a48bcfe55108)
-2. Run `execute.bat` to execute the process and `undo.bat` to undo the changes and enter the required information.\
+2. Run the batch files of the desired function and enter the required information.\
 ![1 0 0-scripts](https://github.com/user-attachments/assets/dd843869-b66b-4fbe-b8b5-a9ae9183f0f9)
